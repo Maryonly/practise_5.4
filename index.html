@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Branching Computational Process</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h2>Branching Computational Process</h2>
+<div class="form-group">
+  <p for="xValue">x:</p> 
+  <input type="number" id="xValue">
+  <button onclick="calculateAndDisplay()">Розрахувати Z</button>
+</div>
+<div class="form-group">
+  <p for="aValue">a:</p> 
+  <input type="number" id="aValue">
+</div>
+<div class="form-group">
+  <p for="bValue">b:</p> 
+  <input type="number" id="bValue">
+</div>
+<div class="form-group">
+  <p for="hValue">h:</p> 
+  <input type="number" id="hValue">
+</div>
+<table id="resultTable">
+  <tr>
+    <th>x</th>
+    <th>Z</th>
+  </tr>
+</table>
+
+<script>
+ // Функція для обчислення значення Z в залежності від введеного значення x
+  function calculateZ(x) {
+    let result;
+    if (x < 2) {
+      result = Math.sin(x) + Math.cos(x);
+    }
+    else if (x === 2) {
+      result = Math.pow(x, 4);
+    }
+    else {
+      result = Math.log(x) + Math.sqrt(x);
+    }
+    return result.toFixed(4); // округлення до 4 знаків після коми
+  }
+
+  // Функція для обчислення та відображення значення Z
+  function calculateAndDisplay() {
+    var xInput = document.getElementById('xValue');
+    var x = parseFloat(xInput.value); // Отримуємо значення x з поля вводу
+
+
+    const aInput = document.getElementById('aValue');
+    const a = parseFloat(aInput.value); // Отримуємо значення a з поля вводу
+
+
+    const bInput = document.getElementById('bValue');
+    const b = parseFloat(bInput.value); // Отримуємо значення b з поля вводу
+
+    const hInput = document.getElementById('hValue');
+    const h = parseFloat(hInput.value); // Отримуємо значення h з поля вводу
+    
+    if(isNaN(a)) {
+      alert("Будь ласка, введіть початкову межу a.");
+      return;
+    }
+    if(isNaN(b)) {
+      alert("Будь ласка, введіть початкову межу b.");
+      return;
+    }
+    if(isNaN(h)) {
+      alert("Будь ласка, введіть крок h.");
+      return;
+    }
+    if(isNaN(x) || x < a || x > b) {
+      alert("Будь ласка, введіть значення x.");
+      return;
+    }
+
+    var n = Math.floor(Math.abs(a - b)/h);
+
+    for (var i = 0; i <= n; i++) {
+      var result = calculateZ(x); // Обчислюємо значення Z за допомогою функції calculateZ
+      var resultTable = document.getElementById('resultTable'); // Отримуємо таблицю результатів
+      var newRow = resultTable.insertRow(-1); // Вставляємо новий рядок у таблицю
+      var xCell = newRow.insertCell(0); // Вставляємо нову комірку для значення x
+      var zCell = newRow.insertCell(1); // Вставляємо нову комірку для значення Z
+      xCell.textContent = x; // Заповнюємо комірку для x отриманим значенням
+      zCell.textContent = result; // Заповнюємо комірку для Z обчисленим результатом
+
+      x = x + h
+    }
+    
+
+  }
+</script>
+</body>
+</html>
